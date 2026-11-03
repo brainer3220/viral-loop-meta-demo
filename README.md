@@ -56,3 +56,23 @@ private briefs or returned data without checking their audience.
 can assemble verified external scene-1.png through scene-3.png. The external
 image manifest records provider call count as unknown, not zero. It does not
 assert that arbitrary image files were produced by Meta.
+
+## Live request limits
+
+Live execution is still disabled without a separately approved exact-request
+permit and provider key. `max_cost_usd` records approval; it is not a provider-side
+billing cap, does not prove credits exist, and never authorizes a card charge.
+
+The adapter enforces 4096 UTF-8 bytes for each brief/prompt, 2048 maximum output
+tokens for planning, a 2 MiB source image, one image per request, a 12 MiB response,
+and an 8 MiB decoded image. Its persistent, file-locked ledger allows at most one
+planning request and three image requests (four requests total). Reservation
+happens before network I/O. Timeouts, invalid outputs and uncertain responses
+consume a slot, and an identical request cannot be retried. The default ledger is
+`~/.local/state/viral-loop-meta-demo/live-budget.json`; it is private local state,
+not a submission artifact. Do not delete/reset or change its location to retry a
+live attempt. An authorized operator must review any uncertain outcome first.
+
+These limits bound request volume and payload size, not the dollar invoice. Live
+execution, confirmed credits and any actual spending still require separate
+approval. The rehearsal makes no provider calls.
