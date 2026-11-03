@@ -23,3 +23,14 @@ class Contracts(unittest.TestCase):
    self.assertIn('images',x);self.assertNotIn('image',x)
    self.assertEqual(x['n'],1)
 if __name__=='__main__':unittest.main()
+
+class OfflineWorkflow(unittest.TestCase):
+ def test_brief_validation_and_template_identity(self):
+  from server import make_plan
+  p=make_plan('Fictional tea for makers')
+  self.assertEqual(p['brief'],'Fictional tea for makers')
+  self.assertEqual(len(p['concepts']),3)
+  self.assertTrue(p['synthetic'])
+ def test_short_brief_rejected(self):
+  from server import make_plan
+  with self.assertRaises(ValueError):make_plan('')

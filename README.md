@@ -14,7 +14,7 @@ Sources checked 2026-11-03:
 
 Requires Python 3.10+, Pillow (`pip install -r requirements.txt`), FFmpeg and FFprobe.
 
-Run `python demo.py`, then `python -m http.server 8765` in this directory.
+Run `python demo.py`, then `python server.py` in this directory.
 Run tests with `python -m unittest discover -s tests`.
 
 The planned submission needs a 3-minute demo video and public source. This
@@ -23,10 +23,13 @@ the production Viral Loop repository remains private.
 
 ## Implemented and remaining
 
-- Implemented: synthetic fixed coffee brief, exactly three fixture concepts,
-  direction selection, rights review, one locally assembled 9-second preview,
+- Implemented: editable brief with synthetic template directions, exactly three fixture concepts,
+  direction selection, rights review, local assembly for any selected direction,
   media hashes and tested provider request contracts.
-- Not implemented in the UI: editable brief submission, real Meta planning,
-  real Meta image generation, assembling the selected alternate direction.
+- Not implemented in the UI: real Meta planning and real Meta image generation.
+  The fixed coffee illustration does not adapt semantically to the input brief.
 - Not verified: live Meta responses, credits, final 3-minute demo or submission.
   The API adapter is a reviewed boundary, not evidence of successful integration.
+
+The local server binds only 127.0.0.1:8765 and rejects cross-origin POSTs.
+It has no API-key entry or live-provider execution endpoint.
