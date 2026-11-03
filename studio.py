@@ -15,14 +15,23 @@ def digest(path):
 
 
 def validate_plan(plan):
+    if not isinstance(plan, dict):
+        raise ValueError('Plan must be an object')
     concepts = plan.get('concepts', [])
-    if len(concepts) != 3 or len({x['id'] for x in concepts}) != 3:
+    if not isinstance(concepts, list) or len(concepts) != 3:
         raise ValueError('Exactly three distinct concepts required')
+    ids = [x.get('id') if isinstance(x, dict) else None for x in concepts]
+    if any(not isinstance(x, str) or not x or len(x) > 80 for x in ids) or len(set(ids)) != 3:
+        raise ValueError('Concept IDs must be distinct strings')
     for c in concepts:
-        if not c.get('title') or len(c.get('scenes', [])) != 3:
+        if not isinstance(c.get('title'), str) or not c['title'] or len(c['title']) > 160 or len(c.get('scenes', [])) != 3:
             raise ValueError('Each concept needs a title and three scenes')
-        if any(not s.get('caption') or not 1 <= s.get('seconds', 0) <= 10 for s in c['scenes']):
-            raise ValueError('Invalid scene')
+        for scene in c['scenes']:
+            if not isinstance(scene, dict) or not isinstance(scene.get('caption'), str) or not 0 < len(scene['caption']) <= 80:
+                raise ValueError('Invalid scene caption')
+            seconds = scene.get('seconds')
+            if isinstance(seconds, bool) or not isinstance(seconds, (int, float)) or not 1 <= seconds <= 10:
+                raise ValueError('Invalid scene duration')
     return plan
 
 

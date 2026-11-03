@@ -34,3 +34,16 @@ class OfflineWorkflow(unittest.TestCase):
  def test_short_brief_rejected(self):
   from server import make_plan
   with self.assertRaises(ValueError):make_plan('')
+
+class Preparation(unittest.TestCase):
+ def test_prepare_plan_has_no_network(self):
+  import subprocess
+  with tempfile.TemporaryDirectory() as d:
+   brief=Path(d)/'brief.txt';brief.write_text('Fictional tea')
+   out=Path(d)/'request.json'
+   subprocess.run([sys.executable,str(Path(__file__).resolve().parents[1]/'live.py'),'prepare-plan','--brief-file',str(brief),'--out',str(out)],check=True)
+   data=json.loads(out.read_text());self.assertFalse(data['executed'])
+   self.assertEqual(len(data['request_sha256']),64)
+ def test_malformed_plan_rejected(self):
+  for x in [None, {'concepts':[None]*3}, {'concepts':[{'id':1}]*3}]:
+   with self.assertRaises(ValueError):validate_plan(x)

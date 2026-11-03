@@ -2,3 +2,9 @@ __pycache__/
 output/
 .env*
 *.key
+*-request.json
+*permit*.json
+brief.txt
+plan.json
+images/
+*.provenance.json

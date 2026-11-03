@@ -41,3 +41,18 @@ hard cap. `max_cost_usd` records the separately approved budget; it does not sto
 provider billing at that amount. Verify current prices, remaining credits and
 account billing before any live request. This rehearsal server never invokes
 the adapter. Failed or uncertain live calls must not be automatically replayed.
+
+## Manual integration preparation (not live-verified)
+
+`python live.py prepare-plan --brief-file brief.txt --out plan-request.json`
+prepares a request and digest without a network call. The execute commands
+require an exact separately approved permit. After an approved planning call,
+`prepare-images` prepares three single-image requests for separate review. Each
+`execute-image` sends exactly one request and saves bytes plus their hash. No
+automatic retry or bulk execution is implemented. Do not publish keys, permits,
+private briefs or returned data without checking their audience.
+
+`python demo.py --plan plan.json --selected CONCEPT_ID --images images/`
+can assemble verified external scene-1.png through scene-3.png. The external
+image manifest records provider call count as unknown, not zero. It does not
+assert that arbitrary image files were produced by Meta.
