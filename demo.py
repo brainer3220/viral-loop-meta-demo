@@ -47,7 +47,7 @@ for i, scene in enumerate(selected['scenes']):
   d.text((38,1190),'SYNTHETIC OFFLINE PREVIEW / NO META CALL',font=small,fill=(180,198,189))
  image=OUT/f'scene-{i+1}.png';im.save(image)
  clip=OUT/f'scene-{i+1}.mp4';clips.append(clip)
- subprocess.run(['ffmpeg','-y','-loglevel','error','-loop','1','-i',str(image),'-t','3','-r','24','-vf',"zoompan=z='min(zoom+0.0006,1.08)':d=72:s=720x1280:fps=24",'-c:v','libx264','-preset','veryfast','-pix_fmt','yuv420p',str(clip)],check=True)
+ subprocess.run(['ffmpeg','-y','-loglevel','error','-loop','1','-i',str(image),'-t',str(scene['seconds']),'-r','24','-vf',"zoompan=z='min(zoom+0.0006,1.08)':d=1:s=720x1280:fps=24",'-c:v','libx264','-preset','veryfast','-pix_fmt','yuv420p',str(clip)],check=True)
 (OUT/'clips.txt').write_text(''.join("file '"+p.name+"'\n" for p in clips))
 subprocess.run(['ffmpeg','-y','-loglevel','error','-f','concat','-safe','1','-i',str(OUT/'clips.txt'),'-c','copy','-movflags','+faststart',str(OUT/'preview.mp4')],check=True)
 probe=json.loads(subprocess.check_output(['ffprobe','-v','error','-show_entries','format=duration:stream=width,height,codec_name','-of','json',str(OUT/'preview.mp4')]))
