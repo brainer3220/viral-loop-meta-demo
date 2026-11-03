@@ -33,3 +33,11 @@ the production Viral Loop repository remains private.
 
 The local server binds only 127.0.0.1:8765 and rejects cross-origin POSTs.
 It has no API-key entry or live-provider execution endpoint.
+
+## Live adapter safety boundary
+
+The request digest permit is an application preflight gate, not a provider billing
+hard cap. `max_cost_usd` records the separately approved budget; it does not stop
+provider billing at that amount. Verify current prices, remaining credits and
+account billing before any live request. This rehearsal server never invokes
+the adapter. Failed or uncertain live calls must not be automatically replayed.
