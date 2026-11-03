@@ -11,7 +11,7 @@ Target length: 180 seconds. No live model output has been recorded.
 | 1:05-1:35 | Reference image, rights check, three scene images | The intended integration is Muse Spark planning and Muse Image edits. | No claim of live integration until saved provider response and image hashes exist. Show synthetic label in rehearsal. |
 | 1:35-2:05 | Assemble chosen scenes and play full 9-second output | FFmpeg turns reviewed scenes into a playable vertical draft. | Show the real render operation and complete local playback. |
 | 2:05-2:35 | Provenance and an alternate direction | Keep the chosen direction, media hashes and approval boundary visible. | Manifest must match the video on screen. Do not claim a billing hard cap. |
-| 2:35-3:00 | Public source, implemented scope, next step | A compact review-first workflow, with the creator making the final decision. | Source public; license requirement unresolved. State remaining real-integration gaps if they remain. |
+| 2:35-3:00 | Public source, implemented scope, next step | A compact review-first workflow, with the creator making the final decision. | Source public; demo source MIT, dependencies and outputs excluded. State remaining real-integration gaps if they remain. |
 
 ## Recording variants
 
@@ -25,8 +25,8 @@ Target length: 180 seconds. No live model output has been recorded.
 ## Before the final capture
 
 1. Verify the public source commit and the organizer's current submission fields.
-2. Resolve the license choice with the owner. Public visibility is not proof that
-   the organizer's open-source requirement is met.
+2. Verify the MIT source scope and third-party notices remain intact. Public
+   visibility alone does not establish rights to arbitrary assets.
 3. Run the offline tests, then separately verify each authorized live request.
 4. Use one fictional brief consistently. Never show real keys, private input,
    account billing pages or production configuration in the recording.

@@ -2,6 +2,7 @@
 import json
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
+from urllib.parse import urlsplit, unquote
 import subprocess
 import threading
 from studio import validate_plan
@@ -18,6 +19,20 @@ def make_plan(brief):
        ('break','Take five','Your next idea needs a break.',['STEP BACK.','TAKE FIVE.','COME BACK CURIOUS.'])]]})
 class Handler(SimpleHTTPRequestHandler):
  def __init__(self,*a,**kw):super().__init__(*a,directory=str(ROOT),**kw)
+ def _public_path(self):
+  relative=unquote(urlsplit(self.path).path).lstrip('/')
+  if relative in ('','index.html'):relative='index.html'
+  allowed={'index.html','output/manifest.json','output/preview.mp4',
+           'output/scene-1.png','output/scene-2.png','output/scene-3.png'}
+  if relative not in allowed:return False
+  target=ROOT/relative
+  return target.is_file() and target.resolve().is_relative_to(ROOT.resolve()) and not target.is_symlink()
+ def do_GET(self):
+  if not self._public_path():self.send_error(404);return
+  super().do_GET()
+ def do_HEAD(self):
+  if not self._public_path():self.send_error(404);return
+  super().do_HEAD()
  def do_POST(self):
   if self.headers.get('Origin') not in (None,'http://127.0.0.1:8765','http://localhost:8765'):
    self.send_error(403);return

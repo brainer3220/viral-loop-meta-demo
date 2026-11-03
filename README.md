@@ -76,3 +76,12 @@ live attempt. An authorized operator must review any uncertain outcome first.
 These limits bound request volume and payload size, not the dollar invoice. Live
 execution, confirmed credits and any actual spending still require separate
 approval. The rehearsal makes no provider calls.
+
+## Licensing and private files
+
+Only the isolated demo source and documentation are MIT-licensed. See
+`THIRD_PARTY_NOTICES.md` for separately installed dependencies, host fonts,
+trademark limits and external-image rights. No third-party assets or production
+product source are relicensed. Future Meta outputs are not automatically MIT.
+The loopback server serves only the UI and named preview artifacts; keys,
+permits, source files and directory listings are not public endpoints.

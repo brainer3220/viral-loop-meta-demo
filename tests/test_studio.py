@@ -98,3 +98,19 @@ class HardLimits(unittest.TestCase):
     except PermissionError:return False
    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
     self.assertEqual(sum(pool.map(attempt,range(8))),1)
+
+class StaticServing(unittest.TestCase):
+ def test_private_files_and_listings_not_served(self):
+  import threading,urllib.request,urllib.error
+  from http.server import ThreadingHTTPServer
+  from server import Handler
+  http=ThreadingHTTPServer(('127.0.0.1',0),Handler)
+  thread=threading.Thread(target=http.serve_forever,daemon=True);thread.start()
+  try:
+   base='http://127.0.0.1:'+str(http.server_port)
+   self.assertEqual(urllib.request.urlopen(base+'/').status,200)
+   for path in ['/studio.py','/.git/config','/.env','/output/','/brief.txt','/plan-request.json','/permit.json','/%2e%2e/studio.py']:
+    for method in ['GET','HEAD']:
+     with self.assertRaises(urllib.error.HTTPError) as caught:urllib.request.urlopen(urllib.request.Request(base+path,method=method))
+     self.assertEqual(caught.exception.code,404)
+  finally:http.shutdown();http.server_close();thread.join()
