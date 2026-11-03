@@ -20,3 +20,13 @@ Run tests with `python -m unittest discover -s tests`.
 The planned submission needs a 3-minute demo video and public source. This
 prototype is not a submitted entry. Only this isolated demo source is public;
 the production Viral Loop repository remains private.
+
+## Implemented and remaining
+
+- Implemented: synthetic fixed coffee brief, exactly three fixture concepts,
+  direction selection, rights review, one locally assembled 9-second preview,
+  media hashes and tested provider request contracts.
+- Not implemented in the UI: editable brief submission, real Meta planning,
+  real Meta image generation, assembling the selected alternate direction.
+- Not verified: live Meta responses, credits, final 3-minute demo or submission.
+  The API adapter is a reviewed boundary, not evidence of successful integration.
